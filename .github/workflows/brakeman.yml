@@ -20,7 +20,7 @@ jobs:
           gem install brakeman && brakeman -A -q -o tmp/${{ github.event.pull_request.head.sha }}-brakeman.json -o /dev/stdout
       - name: Send Brakeman report to Github if it has warnings
         if: failure()
-        uses: cookpad/brakeman-linter-action@v2.0.1-rc.2
+        uses: cookpad/brakeman-linter-action@v2.0.1-rc.3
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           REPORT_PATH: tmp/${{ github.event.pull_request.head.sha }}-brakeman.json

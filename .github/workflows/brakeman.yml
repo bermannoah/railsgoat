@@ -1,4 +1,4 @@
-name: Brakeman Tester
+name: Brakeman Tester (good)
 
 on: pull_request
 

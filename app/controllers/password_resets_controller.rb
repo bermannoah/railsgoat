@@ -3,6 +3,7 @@ class PasswordResetsController < ApplicationController
   skip_before_action :authenticated
 
   def reset_password
+    # Touched to test brakeman-linter-action PR comments.
     user = Marshal.load(Base64.decode64(params[:user])) unless params[:user].nil?
 
     if user && params[:password] && params[:confirm_password] && params[:password] == params[:confirm_password]

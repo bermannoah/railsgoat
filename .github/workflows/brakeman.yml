@@ -1,29 +1,29 @@
 name: Brakeman Tester
 
-on: pull_request
+on:
+  pull_request:
+  push:
+    branches: [master]
 
-env:
-  BUNDLE_WITH: linter
-  BUNDLE_WITHOUT: default:development:test
-  BUNDLE_PATH: vendor/bundle
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+concurrency:
+  group: brakeman-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   brakeman:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          bundler-cache: true
-      - name: Brakeman report
-        run: |
-          bundle exec brakeman -A -q -o tmp/${{ github.event.pull_request.head.sha }}-brakeman.json -o /dev/stdout
-      - name: Send Brakeman report to Github if it has warnings
-        if: failure()
-        uses: cookpad/brakeman-linter-action@v2.0.0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Brakeman
+        uses: cookpad/brakeman-linter-action@716999e8e563ed2309a9ec9e47f93a038854f341 # main
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          REPORT_PATH: tmp/${{ github.event.pull_request.head.sha }}-brakeman.json
-          GITHUB_LATEST_SHA: ${{ github.event.pull_request.head.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CUSTOM_MESSAGE_CONTENT: "test, test, test"
-

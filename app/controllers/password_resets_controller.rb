@@ -61,3 +61,4 @@ class PasswordResetsController < ApplicationController
     end
   end
 end
+# Touched to test brakeman-linter-action PR comments.

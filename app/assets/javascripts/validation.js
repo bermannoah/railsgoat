@@ -3,12 +3,12 @@ function validation(){
 	    rules: {
 	        "user[password]": {
 	            required: false,
-	            minlength: 5
+	            minlength: 6
 	        },
 	        "user[password_confirmation]": {
 	            required: false,
-	            minlength: 5,
-	            equalTo: "#user_password"
+	            minlength: 6,
+	            equalTo: "#account_edit input[name='user[password]']"
 	        }
 	    },
 	    messages: {

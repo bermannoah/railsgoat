@@ -34,11 +34,17 @@ Railsgoat::Application.routes.draw do
   end
 
   get "download" => "benefit_forms#download"
+  get "upload" => "benefit_forms#redirect_to_benefit_forms"
   post "upload" => "benefit_forms#upload"
 
   resources :tutorials do
     collection do
       get "credentials"
+      post "redos_email"
+      post "redos_username"
+      post "redos_email_safe"
+      get "supply_chain"
+      get "check_dependencies"
     end
   end
 
